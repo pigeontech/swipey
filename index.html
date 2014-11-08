@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Swipey Demo</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    #content {
+      background-color: #F0FFFF;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="content">
+    <p>Open the console, then swipe left, right, up, or down. That's it!</p>
+  </div>
+
+  <script src="swipey.js"></script>
+  <script>
+    swipey("content", "left", 200, function() {
+      console.log("You swiped left at least 200 pixels!");
+    });
+
+    swipey("content", "up", 200, function() {
+      console.log("You swiped up at least 200 pixels!");
+    });
+
+    swipey("content", "right", 200, function() {
+      console.log("You swiped right at least 200 pixels!");
+    });
+
+    swipey("content", "down", 200, function() {
+      console.log("You swiped down at least 200 pixels!");
+    });
+  </script>
+
+</body>
+</html>
