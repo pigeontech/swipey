@@ -7,7 +7,7 @@
       padding: 0;
       margin: 0;
     }
-    #content {
+    #content, #content2 {
       background-color: #F0FFFF;
       height: 100%;
       width: 100%;
@@ -18,8 +18,15 @@
 <body>
 
   <div id="content">
-    <p>Open the console, then swipe left, right, up, or down. That's it!</p>
+    <ol>
+    <li>Open the console.
+    <li>Click the "toggle device mode" button (it looks like a little smart phone).
+    <li>Choose a device (such as Amazon Kindle Fire).
+    <li>Your cursor turns into a circle (might need to refresh).
+    <li>Then hold a mouse click while swiping left, right, up, or down. That's it!
+    </ol>
   </div>
+
 
   <script src="swipey.js"></script>
   <script>
@@ -31,7 +38,7 @@
       console.log("You swiped up at least 200 pixels!");
     });
 
-    swipey("content", "right", 200, function() {
+    swipey("#content", "right", 200, function() {
       console.log("You swiped right at least 200 pixels!");
     });
 

@@ -13,24 +13,26 @@
 // Holds info for each swipe.
 var _swipeyObj = {};
 
-// Holds callbacks
+// Holds declarations, rules, and callbacks
 var _swipeyCallbacks = {};
 
 // Function to listen for swipe events and determine if conditions are met.
 function swipey(target, direction, distanceInteger, callback) {
+  var targetStr;
 
   // Make it work regardless of # being present.
   if (target.substring(0,1) === "#") {
-    target = document.getElementById(target.substring(1));
+    targetStr = target.substring(1);
+    target = document.getElementById(targetStr);
   } else {
-    target = document.getElementById(target);
+    targetStr = target;
+    target = document.getElementById(targetStr);
   }
 
-  
-
-  if (_swipeyCallbacks.hasOwnProperty(target) === false) {
-    _swipeyCallbacks[target] = {};
-    _swipeyCallbacks[target][direction] = {"distance": distanceInteger, "callback": callback};
+  if (_swipeyCallbacks.hasOwnProperty(targetStr) === false) {
+    // Add the events only if they weren't already added.
+    _swipeyCallbacks[targetStr] = {};
+    _swipeyCallbacks[targetStr][direction] = {"distance": distanceInteger, "callback": callback};
 
     target.addEventListener("touchstart", function(){
       _swipeyObj.startX = event.changedTouches[0].pageX;
@@ -41,14 +43,15 @@ function swipey(target, direction, distanceInteger, callback) {
       _swipeyObj.endX = event.changedTouches[0].pageX;
       _swipeyObj.endY = event.changedTouches[0].pageY;
 
-      _swipeyCheck(target);
+      _swipeyCheck(targetStr);
     });
   } else {
-    _swipeyCallbacks[target][direction] = {"distance": distanceInteger, "callback": callback};
+    // The target already has these events, so just add rules and callbacks under it.
+    _swipeyCallbacks[targetStr][direction] = {"distance": distanceInteger, "callback": callback};
   }
 }
 
-function _swipeyCheck(target) {
+function _swipeyCheck(targetStr) {
 
   // Get Distance.
   var x = _swipeyObj.startX - _swipeyObj.endX;
@@ -70,7 +73,7 @@ function _swipeyCheck(target) {
   }
 
   // See if conditions are met to call the callback.
-  if (_swipeyCallbacks[target].hasOwnProperty(_swipeyObj.direction) && _swipeyObj.distance >= _swipeyCallbacks[target][_swipeyObj.direction].distance) {
-    _swipeyCallbacks[target][_swipeyObj.direction].callback();
+  if (_swipeyCallbacks[targetStr].hasOwnProperty(_swipeyObj.direction) && _swipeyObj.distance >= _swipeyCallbacks[targetStr][_swipeyObj.direction].distance) {
+    _swipeyCallbacks[targetStr][_swipeyObj.direction].callback();
   }
 }
